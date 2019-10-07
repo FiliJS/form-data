@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <title>FormData</title>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <style>
+      body {
+        font-family: system-ui;
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+
+    <!-- <link rel="stylesheet" href="./styles.css" /> -->
+  </head>
+  <body>
+    <form action="" id="form">
+      <label for="">Completa tu información</label>
+      <input type="text" name="username" id="input-username" />
+      <input type="file" name="file" id="file" />
+
+      <div class="preview">
+        <p id="username"></p>
+        <img src="" alt="" id="image" />
+      </div>
+
+      <button>Enviar</button>
+    </form>
+
+    <!-- <script src="app.js"></script> -->
+    <script>
+      const $form = document.querySelector("#form");
+      const $file = document.querySelector("#file");
+      const $inputUsername = document.querySelector("#input-username")
+      const $username = document.querySelector("#username");
+      const $image = document.querySelector("#image");
+      
+
+      function renderImage(formData) {
+        const file = formData.get("file");
+        const image = URL.createObjectURL(file);
+        
+        $image.setAttribute("src", image);
+      }
+
+      function renderUsername(formData) {
+        const username = formData.get("username");
+        $username.textContent = username;
+
+      }
+
+      $file.addEventListener("change", () => {
+        const formData = new FormData($form);
+        renderImage(formData);
+      })
+
+      $inputUsername.addEventListener("keydown", () => {
+        const formData = new FormData($form);
+        renderUsername(formData);
+      })
+
+      $inputUsername.addEventListener("keyup", () => {
+        const formData = new FormData($form);
+        renderUsername(formData);
+      })
+
+      $form.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(event.currentTarget);
+
+        renderUsername(formData);
+        
+      })
+
+    </script>
+  </body>
+</html>
